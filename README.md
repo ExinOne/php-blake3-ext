@@ -24,6 +24,48 @@ BLAKE3是一个快速、安全的密码学哈希函数，由BLAKE2的作者设�
 - 支持离线构建和审计
 - 保持官方源码文件完全不变
 
+## 源码审计与验证
+
+为了确保透明度和可信度，本项目提供了源码验证脚本，任何人都可以验证我们的BLAKE3源码确实来自官方仓库的指定commit。
+
+### 验证脚本
+
+项目包含 `verify-blake3-sources.sh` 脚本，可以自动比较本地源码与官方仓库：
+
+```bash
+# 运行验证脚本
+./verify-blake3-sources.sh
+```
+
+### 脚本功能
+
+该脚本会：
+
+1. 从官方BLAKE3仓库克隆指定commit的代码
+2. 逐个比较 `src/blake3/` 目录下的每个文件
+3. 显示详细的比较结果
+4. 自动清理临时文件
+
+### 手动验证
+
+如果您希望手动验证，可以使用以下Git命令：
+
+```bash
+# 1. 克隆官方仓库
+git clone https://github.com/BLAKE3-team/BLAKE3.git /tmp/blake3-official
+
+# 2. 切换到指定commit
+cd /tmp/blake3-official
+git checkout df610ddc3b93841ffc59a87e3da659a15910eb46
+
+# 3. 比较文件（以blake3.c为例）
+diff src/blake3/blake3.c /tmp/blake3-official/c/blake3.c
+
+# 4. 或使用Git比较整个目录
+cd /path/to/your/project
+git diff --no-index src/blake3/ /tmp/blake3-official/c/
+```
+
 ## 当前功能
 
 本扩展目前提供最小功能集：
