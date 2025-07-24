@@ -4,7 +4,7 @@
 extern zend_module_entry blake3_module_entry;
 #define phpext_blake3_ptr &blake3_module_entry
 
-#define PHP_BLAKE3_VERSION "1.0.0"
+#define PHP_BLAKE3_VERSION "2.0.0"
 
 #ifdef PHP_WIN32
 #   define PHP_BLAKE3_API __declspec(dllexport)

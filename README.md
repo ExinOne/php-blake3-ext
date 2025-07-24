@@ -68,30 +68,21 @@ git diff --no-index src/blake3/ /tmp/blake3-official/c/
 
 ## 当前功能
 
-本扩展目前提供最小功能集：
+本扩展提供BLAKE3哈希功能，支持可变长度输出和密钥哈希：
 
 ### blake3_hash()
 
 ```php
-blake3_hash(string $data, bool $raw_output = false): string
+blake3_hash(string $data, int $output_size = 32, string $key = '', bool $raw_output = false): string
 ```
 
 **参数:**
-- `$data`: 要哈希的输入数据
+- `$data`: 要哈希的输入数据（必需）
+- `$output_size`: 可选，输出长度（字节），默认32，范围1-65536
+- `$key`: 可选，32字节的密钥，用于keyed hash，默认为空（普通哈希）
 - `$raw_output`: 可选，默认`false`
-  - `false`: 返回64字符的小写十六进制字符串
-  - `true`: 返回32字节的原始二进制数据
-
-**返回值:**
-- 成功时返回BLAKE3哈希值（固定32字节）
-- 失败时返回`false`
-
-**特性:**
-- 固定输出长度：32字节
-- 不支持keyed hash
-- 不支持derive key功能
-- 不支持可变长度输出
-- 不支持流式API
+  - `false`: 返回小写十六进制字符串
+  - `true`: 返回原始二进制数据
 
 ## 系统要求
 
@@ -167,17 +158,53 @@ php -d extension=blake3.so your_script.php
 
 ## 使用示例
 
-### 基本用法
+### 基本哈希
 
 ```php
 <?php
-// 基本哈希（返回hex字符串）
+// 基本哈希（默认32字节输出）
 $hash = blake3_hash('hello world');
-echo $hash; // 输出64字符的小写十六进制字符串
+echo $hash; // d74981efa70a0c880b8d8c1985d075dbcbf679b99a5f9914e5aaf96b831a9e24
+
+// 指定输出长度
+$hash16 = blake3_hash('hello world', 16);
+echo $hash16; // d74981efa70a0c880b8d8c1985d075db
 
 // 获取原始二进制输出
-$raw_hash = blake3_hash('hello world', true);
-echo bin2hex($raw_hash); // 与上面的$hash相同
+$raw_hash = blake3_hash('hello world', 32, '', true);
+echo bin2hex($raw_hash); // 与第一个示例相同
+?>
+```
+
+### 可变长度输出
+
+```php
+<?php
+// 不同长度的输出
+echo blake3_hash('test', 8) . "\n";   // 16字符hex (8字节)
+echo blake3_hash('test', 32) . "\n";  // 64字符hex (32字节，默认)
+?>
+```
+
+### 密钥哈希 (Keyed Hash)
+
+```php
+<?php
+// 生成32字节密钥
+$key = random_bytes(32);
+
+// 使用密钥进行哈希
+$keyed_hash = blake3_hash('message', 32, $key);
+echo $keyed_hash;
+
+// 相同的消息和密钥总是产生相同的哈希
+$verify_hash = blake3_hash('message', 32, $key);
+echo ($keyed_hash === $verify_hash) ? "✅ 验证成功" : "❌ 验证失败";
+
+// 不同的密钥产生不同的哈希
+$different_key = random_bytes(32);
+$different_hash = blake3_hash('message', 32, $different_key);
+echo ($keyed_hash !== $different_hash) ? "✅ 密钥有效" : "❌ 密钥无效";
 ?>
 ```
 
@@ -185,10 +212,7 @@ echo bin2hex($raw_hash); // 与上面的$hash相同
 
 ```bash
 # 测试扩展是否正常工作
-php -d extension=modules/blake3.so -r "echo blake3_hash('abc'), PHP_EOL;"
-
-# 检查扩展信息
-php -d extension=modules/blake3.so -m | grep blake3
+php -d extension=modules/blake3.so -r "echo blake3_hash('test', 32, str_repeat('k', 32)), PHP_EOL;"
 ```
 
 ## 许可证
