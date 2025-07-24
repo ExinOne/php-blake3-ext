@@ -99,6 +99,17 @@ blake3_hash(string $data, bool $raw_output = false): string
 - Linux或macOS系统
 - GCC编译器
 
+### 支持的CPU架构
+
+本扩展支持多种CPU架构，并自动启用对应的硬件优化：
+
+- **x86/x86_64**: 自动启用SSE2、SSE4.1、AVX2、AVX512优化
+- **ARM64 (aarch64)**: 自动启用NEON优化
+- **其他ARM架构**: 启用NEON优化（如果支持）
+- **其他架构**: 使用portable实现
+
+构建系统会自动检测CPU架构并选择合适的优化实现，无需手动配置。
+
 **注意**: 当前版本不支持Windows，Windows支持将在后续版本中添加。
 
 ## 构建安装

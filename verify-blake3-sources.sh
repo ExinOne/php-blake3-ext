@@ -57,6 +57,7 @@ echo "=== Comparing files ==="
 # List of BLAKE3 C files to compare
 FILES=(
     "blake3.h"
+    "blake3_impl.h"
     "blake3.c"
     "blake3_dispatch.c"
     "blake3_portable.c"
