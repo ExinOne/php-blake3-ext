@@ -1,0 +1,58 @@
+# PHP扩展构建文件
+*.o
+*.lo
+*.la
+*.so
+*.dylib
+*.dll
+*.a
+
+# Autotools生成文件
+Makefile
+Makefile.in
+Makefile.fragments
+Makefile.global
+Makefile.objects
+acinclude.m4
+aclocal.m4
+autom4te.cache/
+build/
+config.cache
+config.log
+config.status
+config.h
+config.h.in
+configure
+configure.in
+install-sh
+libtool
+ltmain.sh
+missing
+mkinstalldirs
+
+# PHP扩展特定文件
+.deps
+.libs/
+modules/
+run-tests.php
+*.gcno
+*.gcda
+*.gcov
+
+# 编辑器和IDE文件
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# 操作系统文件
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db 
