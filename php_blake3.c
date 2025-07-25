@@ -152,6 +152,7 @@ PHP_MINFO_FUNCTION(blake3)
 {
     php_info_print_table_start();
     php_info_print_table_header(2, "BLAKE3 support", "enabled");
+    php_info_print_table_row(2, "Author", "ExinOne Team");
     php_info_print_table_row(2, "Extension Version", PHP_BLAKE3_VERSION);
     php_info_print_table_row(2, "BLAKE3 Implementation", "Official C implementation");
     php_info_print_table_row(2, "BLAKE3 Version", "1.8.2 (commit: df610ddc)");

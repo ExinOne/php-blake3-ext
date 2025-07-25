@@ -126,7 +126,7 @@ This extension supports multiple CPU architectures and automatically enables cor
 
 The build system automatically detects CPU architecture and selects appropriate optimized implementations without manual configuration.
 
-**Note**: Windows support is not currently available and will be added in future versions.
+**Note**: Windows support is not currently available.
 
 ## Build and Installation
 
@@ -154,7 +154,7 @@ phpize
 ./configure --enable-blake3
 
 # Compile
-make -j$(nproc)
+make
 ```
 
 ### 3. Install
@@ -238,6 +238,8 @@ echo ($keyed_hash !== $different_hash) ? "✅ Key effective" : "❌ Key invalid"
 ```bash
 # Test if extension works properly
 php -d extension=modules/blake3.so -r "echo blake3_hash('test', 32, str_repeat('k', 32)), PHP_EOL;"
+
+# a8501cdfa8333b871055227e5a4a1228899bc1db4dddbbe6e24971332edbfc55
 ```
 
 ## License

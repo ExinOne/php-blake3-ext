@@ -103,7 +103,7 @@ blake3_hash(string $data, int $output_size = 32, string $key = '', bool $raw_out
 
 构建系统会自动检测CPU架构并选择合适的优化实现，无需手动配置。
 
-**注意**: 当前版本不支持Windows，Windows支持将在后续版本中添加。
+**注意**: 当前版本不支持Windows。
 
 ## 构建安装
 
@@ -131,7 +131,7 @@ phpize
 ./configure --enable-blake3
 
 # 编译
-make -j$(nproc)
+make
 ```
 
 ### 3. 安装
@@ -215,6 +215,8 @@ echo ($keyed_hash !== $different_hash) ? "✅ 密钥有效" : "❌ 密钥无效"
 ```bash
 # 测试扩展是否正常工作
 php -d extension=modules/blake3.so -r "echo blake3_hash('test', 32, str_repeat('k', 32)), PHP_EOL;"
+
+# a8501cdfa8333b871055227e5a4a1228899bc1db4dddbbe6e24971332edbfc55
 ```
 
 ## 许可证
