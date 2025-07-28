@@ -18,10 +18,10 @@ extern zend_module_entry blake3_module_entry;
 #include "TSRM.h"
 #endif
 
-/* 声明BLAKE3哈希函数 */
+/* Declaration of BLAKE3 hash function */
 PHP_FUNCTION(blake3_hash);
 
-/* 模块入口点声明 */
+/* Module entry point declarations */
 PHP_MINIT_FUNCTION(blake3);
 PHP_MSHUTDOWN_FUNCTION(blake3);
 PHP_MINFO_FUNCTION(blake3);
